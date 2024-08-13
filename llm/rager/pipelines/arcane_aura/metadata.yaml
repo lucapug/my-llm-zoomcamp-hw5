@@ -4,7 +4,8 @@ blocks:
   configuration:
     file_source:
       path: rager/data_loaders/empyreal_hyperion.py
-  downstream_blocks: []
+  downstream_blocks:
+  - sidereal_oblivion
   executor_config: null
   executor_type: local_python
   groups:
@@ -13,7 +14,7 @@ blocks:
   language: python
   name: Empyreal hyperion
   retry_config: null
-  status: not_executed
+  status: executed
   timeout: null
   type: data_loader
   upstream_blocks: []
@@ -23,7 +24,8 @@ blocks:
   configuration:
     file_source:
       path: rager/transformers/sidereal_oblivion.py
-  downstream_blocks: []
+  downstream_blocks:
+  - mystic_glyph
   executor_config: null
   executor_type: local_python
   groups:
@@ -32,17 +34,19 @@ blocks:
   language: python
   name: Sidereal oblivion
   retry_config: null
-  status: not_executed
+  status: executed
   timeout: null
   type: transformer
-  upstream_blocks: []
+  upstream_blocks:
+  - empyreal_hyperion
   uuid: sidereal_oblivion
 - all_upstream_blocks_executed: true
   color: null
   configuration:
     file_source:
       path: rager/transformers/mystic_glyph.py
-  downstream_blocks: []
+  downstream_blocks:
+  - captivating_hyperion
   executor_config: null
   executor_type: local_python
   groups:
@@ -51,17 +55,19 @@ blocks:
   language: python
   name: Mystic glyph
   retry_config: null
-  status: not_executed
+  status: executed
   timeout: null
   type: transformer
-  upstream_blocks: []
+  upstream_blocks:
+  - sidereal_oblivion
   uuid: mystic_glyph
 - all_upstream_blocks_executed: true
   color: null
   configuration:
     file_source:
       path: rager/transformers/captivating_hyperion.py
-  downstream_blocks: []
+  downstream_blocks:
+  - resonant_dynamo
   executor_config: null
   executor_type: local_python
   groups:
@@ -70,11 +76,89 @@ blocks:
   language: python
   name: Captivating hyperion
   retry_config: null
-  status: not_executed
+  status: executed
   timeout: null
   type: transformer
-  upstream_blocks: []
+  upstream_blocks:
+  - mystic_glyph
   uuid: captivating_hyperion
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file:
+      content: null
+      extension: py
+      language: python
+      modified_timestamp: 1723553321
+      name: resonant_dynamo.py
+      output: null
+      path: /home/src/llm/rager/data_exporters/resonant_dynamo.py
+      relative_path: llm/rager/data_exporters/resonant_dynamo.py
+      size: 2384
+    file_source:
+      path: rager/data_exporters/resonant_dynamo.py
+    templates:
+      elasticsearch:
+        variables:
+          connection_string: http://my-llm-zoomcamp-hw5-elasticsearch-1:9200
+          dimensions: null
+          index_name: documents
+          number_of_replicas: 0
+          number_of_shards: 1
+          vector_column_name: embedding
+  downstream_blocks:
+  - transcendent_crucible
+  executor_config: null
+  executor_type: local_python
+  groups:
+  - vector_database
+  has_callback: false
+  language: python
+  name: Resonant dynamo
+  retry_config: null
+  status: failed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - captivating_hyperion
+  uuid: resonant_dynamo
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    file:
+      content: null
+      extension: py
+      language: python
+      modified_timestamp: 1723557080
+      name: transcendent_crucible.py
+      output: null
+      path: /home/src/llm/rager/data_loaders/transcendent_crucible.py
+      relative_path: llm/rager/data_loaders/transcendent_crucible.py
+      size: 1493
+    file_source:
+      path: rager/data_loaders/transcendent_crucible.py
+    templates:
+      elasticsearch:
+        variables:
+          chunk_column: chunk
+          connection_string: http://my-llm-zoomcamp-hw5-elasticsearch-1:9200
+          index_name: documents_20240813_1818
+          vector_column_name: embedding
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  groups:
+  - iterative_retrieval
+  has_callback: false
+  language: python
+  name: Transcendent crucible
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - resonant_dynamo
+  uuid: transcendent_crucible
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
@@ -98,5 +182,7 @@ spark_config: {}
 tags: []
 type: python
 uuid: arcane_aura
+variables:
+  index_name: documents_20240813_1818
 variables_dir: /home/src/mage_data/rager
 widgets: []
