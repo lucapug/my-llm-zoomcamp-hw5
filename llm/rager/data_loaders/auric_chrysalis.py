@@ -8,13 +8,16 @@ if 'data_loader' not in globals():
 if 'test' not in globals():
     from mage_ai.data_preparation.decorators import test
 
-
-query = "When is the next cohort?"
+query="When is the next cohort?"
 
 @data_loader
-def elastic_search(kwargs, query, index_name = "documents_20240813_1818"):
-    connection_string = kwargs.get('Connection_string', 'http://localhost:9200')
-    es_client = Elasticsearch(connection_string)
+def search(*args, **kwargs):
+    connection_string = kwargs['configuration'].get('connection_string', 'http://my-llm-zoomcamp-hw5-elasticsearch-1:9200')
+    index_name = kwargs['configuration'].get('index_name', 'documents_20240813_1818')
+    es_client=Elasticsearch(connection_string)
+#    source = kwargs.get('source', "cosineSimilarity(params.query_vector, 'embedding') + 1.0")
+#    top_k = kwargs.get('top_k', 5)
+#    chunk_column = kwargs.get('chunk_column', 'content')
 
     search_query = {
         "size": 5,
@@ -26,11 +29,6 @@ def elastic_search(kwargs, query, index_name = "documents_20240813_1818"):
                         "fields": ["question^3", "text", "section"],
                         "type": "best_fields"
                     }
-                },
-                "filter": {
-                    "term": {
-                        "course": "data-engineering-zoomcamp"
-                    }
                 }
             }
         }
@@ -38,7 +36,7 @@ def elastic_search(kwargs, query, index_name = "documents_20240813_1818"):
 
     response = es_client.search(index=index_name, body=search_query)
 
-    return [hit['_source']['content'] for hit in response['hits']['hits']]
+    return [hit['_source'] for hit in response['hits']['hits']]
 
 
 @test
