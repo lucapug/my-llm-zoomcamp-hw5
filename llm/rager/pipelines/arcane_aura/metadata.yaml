@@ -116,13 +116,13 @@ blocks:
   language: python
   name: Resonant dynamo
   retry_config: null
-  status: failed
+  status: executed
   timeout: null
   type: data_exporter
   upstream_blocks:
   - captivating_hyperion
   uuid: resonant_dynamo
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     file:
@@ -183,6 +183,6 @@ tags: []
 type: python
 uuid: arcane_aura
 variables:
-  index_name: documents_20240813_1818
+  index_name: documents_20240813_3639
 variables_dir: /home/src/mage_data/rager
 widgets: []
